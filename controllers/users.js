@@ -32,6 +32,7 @@ usersRouter.get('/', async (request, response) => {
       description: 1,
       category: 1,
       location: 1,
+      images: 1,
       price: 1,
       delivery: 1,
       seller: 1,

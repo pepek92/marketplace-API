@@ -20,6 +20,12 @@ const itemSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  images: {
+    contentType: String,
+    type: Array,
+    maxlength: 4,
+    require: true
+  },
   price: {
     type: Number,
     required: true
