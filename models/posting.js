@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 var utc = new Date()
 utc.setHours( utc.getHours() + 2)
 
-const itemSchema = mongoose.Schema({
+const postingSchema = mongoose.Schema({
   title: {
     type: String,
     required: true
@@ -52,7 +52,7 @@ const itemSchema = mongoose.Schema({
   }
 })
 
-itemSchema.set('toJSON', {
+postingSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
@@ -60,4 +60,4 @@ itemSchema.set('toJSON', {
   }
 })
 
-module.exports = mongoose.model('Item', itemSchema)
+module.exports = mongoose.model('Posting', postingSchema)

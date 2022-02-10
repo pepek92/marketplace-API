@@ -3,11 +3,11 @@ const app = require('../app')
 const api = supertest(app)
 const expect = require('chai').expect
 
-describe('TEST /api/items', function() {
+describe('TEST /api/postings', function() {
 
-  it('status code 200', function(done) {
+  it('status code 200', function (done) {
     api
-      .get('/api/items')
+      .get('/api/postings')
       .expect(200)
       .end(function (err, res) {
         const result = res.statusCode
@@ -18,33 +18,13 @@ describe('TEST /api/items', function() {
 
   it('content returns as json', function(done) {
     api
-      .get('/api/items')
+      .get('/api/postings')
       .expect('Content-Type', /application\/json/)
       .end(function (err, res) {
         const result = res.statusCode
         expect(result).to.equal(200)
         done()
       })
-  })
-
-  it('creating an item without authorization', async function() {
-
-    const testItem = {
-      title: 'testi tuote',
-      description: 'testi',
-      category: 'testit',
-      location: 'Helsinki',
-      images: [],
-      price: 1500,
-      delivery: 'nouto',
-      seller: 'Petteri K',
-      contact: '050 2343366'
-    }
-
-    await api
-      .post('/api/items')
-      .send(testItem)
-      .expect(401)
   })
 })
 
