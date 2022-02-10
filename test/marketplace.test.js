@@ -55,15 +55,27 @@ describe('TEST /api/users', function() {
 
 describe('TEST /api/login', function() {
 
-  const kayttaja = {
+  const wrong = {
     username: 'väärä',
     password: 'väärä'
+  }
+
+  const test = {
+    username: 'test',
+    password: 'test'
   }
 
   it('login with wrong password or username', async function() {
     await api
       .post('/api/login')
-      .send(kayttaja)
+      .send(wrong)
       .expect(401)
+  })
+
+  it('test login', async function() {
+    await api
+      .post('/api/login')
+      .send(test)
+      .expect(200)
   })
 })
