@@ -3,7 +3,7 @@ info:
   title: marketplace
   version: '1.0'
 servers:
-  - url: 'http://localhost:3003/api'
+  - url: 'http://kivela-marketplace.herokuapp.com/api'
 paths:
   /users:
     get:
