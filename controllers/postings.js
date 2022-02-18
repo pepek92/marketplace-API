@@ -9,23 +9,23 @@ postingsRouter.get('/', async (request, response) => {
 })
 
 postingsRouter.get('/location', async (req, res) => {
-  const loc = req.query.loc
-  console.log(loc)
-  const postings = await Posting.find({ location: loc }).populate('user', { username: 1, name: 1 })
+  const query = req.query.query
+  console.log(query)
+  const postings = await Posting.find({ location: query }).populate('user', { username: 1, name: 1 })
   res.json(postings.map(posting => posting.toJSON()))
 })
 
 postingsRouter.get('/category', async (req, res) => {
-  const cat = req.query.cat
-  console.log(cat)
-  const postings = await Posting.find({ category: cat }).populate('user', { username: 1, name: 1 })
+  const query = req.query.query
+  console.log(query)
+  const postings = await Posting.find({ category: query }).populate('user', { username: 1, name: 1 })
   res.json(postings.map(posting => posting.toJSON()))
 })
 
 postingsRouter.get('/date', async (req, res) => {
-  const date = req.query.date
-  console.log(date)
-  const postings = await Posting.find({ 'created': {'$gte': date }}).populate('user', { username: 1, name: 1 })
+  const query = req.query.query
+  console.log(query)
+  const postings = await Posting.find({ 'created': {'$gte': query }}).populate('user', { username: 1, name: 1 })
   res.json(postings.map(posting => posting.toJSON()))
 })
 

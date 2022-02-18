@@ -1,0 +1,313 @@
+openapi: 3.1.0
+info:
+  title: marketplace
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3003/api'
+paths:
+  /users:
+    get:
+      summary: Get a List of Users
+      tags: []
+      responses:
+        '200':
+          description: Users Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      operationId: get-users
+      description: >-
+        Retrieve the information of users. If there is no users empty array will
+        be returned
+    post:
+      summary: Create New User
+      operationId: post-user
+      responses:
+        '200':
+          description: User Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Missing Required Information
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+                name:
+                  type: string
+              required:
+                - username
+                - password
+        description: Post the necessary fields for the API to create a new user.
+      description: Create a new user.
+  /postings:
+    get:
+      summary: Get a List of Postings
+      tags: []
+      responses:
+        '200':
+          description: Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: Not Found
+      operationId: get-postings
+      description: Retrieve the information of postings.
+    post:
+      summary: Create New Posting
+      operationId: post-posting
+      responses:
+        '200':
+          description: Posting Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Missing Required Information
+        '401':
+          description: Invalid Token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Title:
+                  type: string
+                Description:
+                  type: string
+                Category:
+                  type: string
+                Location:
+                  type: string
+                Price:
+                  type: number
+                Date:
+                  type: string
+                Delivery:
+                  type: string
+                Seller:
+                  type: string
+                Contact:
+                  type: string
+              required:
+                - id
+                - Title
+                - Category
+                - Location
+                - Price
+                - Seller
+        description: Post the necessary fields for the API to create a new posting.
+      description: Create a new posting.
+    parameters: []
+  '/postings/{Id}':
+    parameters:
+      - schema:
+          type: string
+        name: Id
+        in: path
+        required: true
+    delete:
+      summary: Delete posting by ID
+      tags: []
+      responses:
+        '200':
+          description: ID found and posting deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Posting Not Found
+        '401':
+          description: Invalid Token
+      operationId: delete-postings-byId
+      description: Delete posting with matching Id.
+    put:
+      summary: Update Posting by Posting ID
+      tags: []
+      responses:
+        '200':
+          description: Posting updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Posting'
+        '400':
+          description: Posting Not Found
+        '401':
+          description: Invalid Token
+      operationId: update-postings-byId
+      description: Update posting with matching Id.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Title:
+                  type: string
+                Description:
+                  type: string
+                Category:
+                  type: string
+                Location:
+                  type: string
+                Price:
+                  type: number
+                Date:
+                  type: string
+                Delivery:
+                  type: string
+                Seller:
+                  type: string
+                ContactInfo:
+                  type: string
+              required:
+                - id
+                - Title
+                - Category
+                - Location
+                - Price
+                - Seller
+  /login:
+    post:
+      summary: ''
+      operationId: post-login
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: 'Unauthorized: invalid username or password'
+          headers: {}
+      description: |
+        Login request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                psw:
+                  type: string
+              required:
+                - username
+                - password
+  /postings/location:
+    get:
+      summary: Postings by location
+      tags: []
+      responses:
+        '200':
+          description: OK
+      operationId: get-postings-location
+      description: Postings by location
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: location
+  /postings/category:
+    get:
+      summary: Postings by category
+      tags: []
+      responses:
+        '200':
+          description: OK
+      operationId: get-postings-category
+      parameters:
+        - schema:
+            type: string
+          in: query
+      description: Get posting by category
+    parameters: []
+  /postings/date:
+    get:
+      summary: Get postings by date
+      tags: []
+      responses:
+        '200':
+          description: OK
+      operationId: get-postings-date
+      description: Get date posting was made
+  /upload:
+    post:
+      summary: ''
+      operationId: upload-image
+      responses: {}
+      description: Upload image
+      parameters: []
+      requestBody:
+        content:
+          image/png:
+            schema:
+              type: string
+              format: binary
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      description: All needed information for making a new user
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the given user.
+        name:
+          type: string
+        username:
+          type: string
+      required:
+        - id
+        - name
+        - username
+    Posting:
+      title: Posting
+      type: object
+      description: All needed information for making a posting
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the given posting.
+        Title:
+          type: string
+        Description:
+          type: string
+        Category:
+          type: string
+        Location:
+          type: string
+        Price:
+          type: number
+        Date:
+          type: date
+        Delivery:
+          type: string
+        Seller:
+          type: string
+        Contact:
+          type: string
+        images:
+          type: array
+      required:
+        - id
+        - Title
+        - Category
+        - Location
+        - Price
+        - Seller
+  securitySchemes: {}
